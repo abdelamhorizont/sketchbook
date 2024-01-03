@@ -1,0 +1,13 @@
+.App{
+
+  img{
+    position: absolute;
+    filter: blur(90px);
+    transition: all 1s ease;
+  }
+
+  img:hover{
+    filter: blur(0px);
+  }
+
+}

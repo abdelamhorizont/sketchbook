@@ -1,5 +1,7 @@
+import { useRef, useState } from 'react';
+import { Image } from './components/Image';
 import './App.scss';
-import { motion } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 
 function importAll(r) {
   let images = {};
@@ -9,48 +11,24 @@ function importAll(r) {
 
 const images = importAll(require.context('./assets', false, /\.(png|jpe?g|svg)$/));
 
-function randomNumber(min, max) { // min and max included
+export function randomNumber(min, max) { // min and max included
   return (
     Math.floor(Math.random() * (max - min + 1) + min)
   )
 }
 
 function App() {
-  const isBrowser = () => typeof window !== "undefined"
-  const windowHeight = isBrowser() && window.screen.height
-  const windowWidth = isBrowser() && window.screen.width
-
   let imageArray = Object.keys(images).map(function (k) { return images[k] });
-  console.log(images);
-  
-  const container = {
-    start: { rotate: 0 },
-    move: {
-      rotate: 90,
-      transition: { repeat: Infinity, duration: 2 }
-    }
-  }
+
+  const imageNumber = 4
+  const randomStart = randomNumber(0, imageArray.length - imageNumber)
 
   return (
     <div className="App">
       {
-        imageArray.slice(0,15).map((image) => {
-          const imgStyle = {
-            width: randomNumber(200, 700) + "px",
-            left: randomNumber(-100, windowWidth - 200) + "px",
-            top: randomNumber(-100, windowHeight - 200) + "px",
-          }
-
+        imageArray.slice(randomStart, randomStart + imageNumber).map((image, i) => {
           return (
-            <motion.img
-              // variants={container}
-              // initial="start"
-              start={{ width: randomNumber(200, 700) + "px" }}
-              animate={{ width: randomNumber(200, 700) + "px" }}
-              transition={{ repeat: Infinity, repeatType: "reverse", duration: 100 }}
-              style={imgStyle}
-              src={image}
-              alt="" />
+            <Image index={i} image={image}  />
           )
         })
       }
@@ -59,3 +37,4 @@ function App() {
 }
 
 export default App;
+

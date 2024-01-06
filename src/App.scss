@@ -1,13 +1,19 @@
 .App{
+  position: fixed;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  // background-color: black;
 
   img{
     position: absolute;
-    filter: blur(90px);
+    // filter: blur(90px);
     transition: all 1s ease;
   }
 
   img:hover{
     filter: blur(0px);
+    // z-index: 1;
   }
 
 }
